@@ -3,10 +3,11 @@ import pandas as pd
 
 app = Flask(__name__)
 
-
+stations = pd.read_csv("data_small/stations.txt", skiprows=17)
+stations = stations[["STAID", "STANAME                                 "]]
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("home.html", data=stations.to_html())
 
 
 @app.route("/api/v1/<station>/<date>")
@@ -17,12 +18,6 @@ def about(station, date):
     return {"station": station,
             "date": date,
             "temperature": temperature}
-    station = 10
-    new = str(station).zfill(6)
-    print(new)
-    # df = pandas.read_csv("")
-    # temperature = df.station(date)
-    # return render_template("about.html")
 
 
 if __name__ == "__main__":
